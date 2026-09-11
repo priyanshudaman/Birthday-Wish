@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Happy Birthday!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  /* ======================================================================
+     🎂  BIRTHDAY WISH — main stylesheet
+     ====================================================================== */
+
+  :root{
+    --sky-top:#1b1140;
+    --sky-mid:#5b2a86;
+    --sky-bottom:#ff7e5f;
+    --gold:#ffd166;
+    --pink:#f78fb3;
+    --mint:#6fcf97;
+    --cream:#fff3e0;
+    --ink:#22163f;
+    --white:#fffaf3;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html,body{
+    margin:0;
+    min-height:100vh;
+    min-height:100dvh;
+    background:var(--ink);
+    font-family:'Nunito', sans-serif;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px 12px;
+    -webkit-tap-highlight-color:transparent;
+    overscroll-behavior:none;
+    touch-action:manipulation;
+  }
+
+  .stage{
+    width:100%;
+    max-width:460px;
+  }
+
+  .scene{
+    position:relative;
+    width:100%;
+    aspect-ratio:9/13;
+    max-height:82vh;
+    max-height:82dvh;
+    border-radius:28px;
+    overflow:hidden;
+    background:
+      radial-gradient(120% 60% at 50% 0%, var(--sky-mid) 0%, transparent 60%),
+      linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 45%, var(--sky-bottom) 100%);
+    box-shadow:0 30px 60px rgba(0,0,0,.45);
+  }
+
+  /* ---------- twinkling stars ---------- */
+  .stars{ position:absolute; inset:0; }
+  .stars span{
+    position:absolute;
+    width:3px; height:3px;
+    background:#fff;
+    border-radius:50%;
+    opacity:.7;
+    animation:twinkle 2.6s ease-in-out infinite;
+  }
+  @keyframes twinkle{ 0%,100%{opacity:.15;} 50%{opacity:.9;} }
+
+  /* ---------- ground ---------- */
+  .ground{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    height:16%;
+    background:linear-gradient(180deg, #6b3fa0 0%, #482a72 100%);
+    border-top:3px solid rgba(255,255,255,.15);
+  }
+
+  /* ---------- wind streaks ---------- */
+  .wind-layer{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+  }
+  .streak{
+    position:absolute;
+    height:3px;
+    width:26%;
+    left:-30%;
+    border-radius:3px;
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,.9), transparent);
+    opacity:0;
+    animation-play-state:paused;
+    animation-name:streakMove;
+    animation-timing-function:ease-in;
+    animation-iteration-count:infinite;
+  }
+  .wind-layer.active .streak{ animation-play-state:running; }
+  .wind-layer.strong .streak{ animation-duration:.55s !important; height:4px; }
+
+  .streak:nth-child(1){ top:18%; animation-duration:1.4s; animation-delay:0s;}
+  .streak:nth-child(2){ top:32%; animation-duration:1.1s; animation-delay:.15s;}
+  .streak:nth-child(3){ top:46%; animation-duration:1.3s; animation-delay:.3s;}
+  .streak:nth-child(4){ top:58%; animation-duration:1s;   animation-delay:.05s;}
+  .streak:nth-child(5){ top:70%; animation-duration:1.25s;animation-delay:.4s;}
+  .streak:nth-child(6){ top:26%; animation-duration:1.15s;animation-delay:.55s;}
+
+  @keyframes streakMove{
+    0%{ transform:translateX(0); opacity:0; }
+    12%{ opacity:.85; }
+    85%{ opacity:.5; }
+    100%{ transform:translateX(500%); opacity:0; }
+  }
+
+  /* ---------- character + cake wrapper ---------- */
+  .character-wrap{
+    position:absolute;
+    left:50%; bottom:16%;
+    width:52%;
+    transform:translate(-50%,0);
+    transform-origin:50% 90%;
+  }
+  .character-wrap svg{ width:100%; height:auto; display:block; overflow:visible; }
+
+  .character-wrap.journey{
+    animation:heroicJourney 4.6s cubic-bezier(.45,0,.25,1) forwards;
+  }
+
+  @keyframes heroicJourney{
+    0%   { transform:translate(-50%,0) rotate(0deg) scale(1); opacity:1; }
+    8%   { transform:translate(calc(-50% + 6px),-4px) rotate(-3deg) scale(1); }
+    14%  { transform:translate(calc(-50% - 8px),3px) rotate(4deg) scale(1); }
+    20%  { transform:translate(calc(-50% + 6px),-3px) rotate(-3deg) scale(1); }
+    26%  { transform:translate(-50%,0) rotate(0deg) scale(1); }
+    50%  { transform:translate(180%,-55vh) rotate(280deg) scale(.65); opacity:1; }
+    58%  { transform:translate(230%,-60vh) rotate(320deg) scale(.55); opacity:0; }
+    59%  { transform:translate(-230%,-140vh) rotate(0deg) scale(.55); opacity:0; }
+    76%  { transform:translate(-50%,-40vh) rotate(-12deg) scale(1.05); opacity:1; }
+    86%  { transform:translate(-50%,6px) rotate(3deg) scale(.92,.86); }
+    93%  { transform:translate(-50%,-12px) rotate(-2deg) scale(1.06,1.1); }
+    100% { transform:translate(-50%,0) rotate(0deg) scale(1); }
+  }
+
+  .dust{
+    position:absolute;
+    left:50%; bottom:15%;
+    width:70px; height:20px;
+    margin-left:-35px;
+    border-radius:50%;
+    background:radial-gradient(closest-side, rgba(255,255,255,.85), transparent 70%);
+    opacity:0;
+    pointer-events:none;
+  }
+  .dust.journey{
+    animation:dustPuff 4.6s ease-out forwards;
+  }
+  @keyframes dustPuff{
+    0%,83%{ opacity:0; transform:scale(.2); }
+    86%{ opacity:.9; transform:scale(1.6); }
+    94%{ opacity:0; transform:scale(2.2); }
+    100%{ opacity:0; }
+  }
+
+  /* ---------- flames ---------- */
+  .flame{
+    transform-origin:center bottom;
+    animation:flicker 1s ease-in-out infinite;
+    transition:opacity .35s ease, transform .35s ease;
+  }
+  .flame.out{
+    opacity:0;
+    transform:scaleY(0) translateY(6px);
+  }
+  @keyframes flicker{
+    0%,100%{ transform:scaleY(1) rotate(0deg); }
+    50%{ transform:scaleY(1.12) rotate(3deg); }
+  }
+
+  /* ---------- banner ---------- */
+  .banner-wrap{
+    position:absolute;
+    left:58%;
+    bottom:34%;
+    transform-origin:left center;
+    transform:scaleX(0);
+    opacity:0;
+  }
+  .banner-wrap.show{
+    animation:bannerUnfurl .7s cubic-bezier(.2,1.4,.4,1) forwards;
+  }
+  @keyframes bannerUnfurl{
+    0%{ transform:scaleX(0); opacity:0; }
+    60%{ opacity:1; }
+    100%{ transform:scaleX(1); opacity:1; }
+  }
+  .banner{
+    position:relative;
+    white-space:nowrap;
+    background:linear-gradient(135deg, var(--gold), #ffb84c);
+    color:#5a2e00;
+    font-family:'Fredoka', sans-serif;
+    font-weight:700;
+    padding:10px 22px 10px 16px;
+    border-radius:6px 16px 16px 6px;
+    box-shadow:0 8px 18px rgba(0,0,0,.35);
+    font-size:clamp(13px, 4vw, 18px);
+  }
+  .banner::before{
+    content:"";
+    position:absolute;
+    left:-11px; top:50%;
+    transform:translateY(-50%);
+    border-style:solid;
+    border-width:11px 11px 11px 0;
+    border-color:transparent #d98a2b transparent transparent;
+  }
+
+  /* ---------- confetti ---------- */
+  .confetti-layer{ position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+  .confetti-bit{
+    position:absolute;
+    top:-10px;
+    width:8px; height:12px;
+    opacity:.95;
+    animation:confettiFall linear forwards;
+  }
+  @keyframes confettiFall{
+    0%{ transform:translateY(0) rotate(0deg); }
+    100%{ transform:translateY(115vh) rotate(540deg); }
+  }
+
+  /* ---------- UI ---------- */
+  .ui{
+    position:absolute;
+    left:0; right:0; bottom:4%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    padding:0 16px;
+  }
+  button#blowBtn{
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    font-size:16px;
+    color:var(--ink);
+    background:var(--white);
+    border:none;
+    padding:14px 28px;
+    min-height:48px;
+    border-radius:999px;
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+    box-shadow:0 8px 16px rgba(0,0,0,.3);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  button#blowBtn:hover{ transform:translateY(-2px); box-shadow:0 10px 20px rgba(0,0,0,.35); }
+  button#blowBtn:active{ transform:translateY(0); }
+  button#blowBtn:disabled{ opacity:.6; cursor:default; transform:none; }
+
+  .hint{
+    color:rgba(255,255,255,.75);
+    font-size:12px;
+    text-align:center;
+    margin:0;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .flame, .streak, .character-wrap.journey, .dust.journey, .banner-wrap.show, .confetti-bit{
+      animation:none !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="scene" id="scene">
+
+    <div class="stars" id="stars"></div>
+    <div class="ground"></div>
+
+    <div class="wind-layer" id="windLayer">
+      <span class="streak"></span><span class="streak"></span><span class="streak"></span>
+      <span class="streak"></span><span class="streak"></span><span class="streak"></span>
+    </div>
+
+    <div class="dust" id="dust"></div>
+
+    <div class="character-wrap" id="characterWrap">
+      <svg viewBox="0 0 300 360" xmlns="http://www.w3.org/2000/svg">
+
+        <!-- shoes -->
+        <ellipse cx="122" cy="345" rx="20" ry="8" fill="#2d3436"/>
+        <ellipse cx="178" cy="345" rx="20" ry="8" fill="#2d3436"/>
+        <!-- legs -->
+        <rect x="108" y="275" width="30" height="75" rx="12" fill="#3b4a91"/>
+        <rect x="162" y="275" width="30" height="75" rx="12" fill="#3b4a91"/>
+        <!-- torso -->
+        <rect x="90" y="195" width="120" height="95" rx="32" fill="#ff6f61"/>
+        <!-- neck -->
+        <rect x="138" y="178" width="24" height="26" rx="8" fill="#f2b28c"/>
+
+        <!-- back arm (left, behind cake) -->
+        <path d="M96 208 Q58 226 76 266 Q92 280 112 258 Z" fill="#f2b28c"/>
+
+        <!-- cake -->
+        <g id="cake">
+          <rect x="90" y="250" width="120" height="42" rx="10" fill="#f78fb3"/>
+          <rect x="104" y="216" width="92" height="38" rx="9" fill="#fff3e0"/>
+          <rect x="120" y="186" width="60" height="33" rx="8" fill="#6fcf97"/>
+          <!-- little frosting dots -->
+          <circle cx="95" cy="250" r="5" fill="#fff"/>
+          <circle cx="115" cy="250" r="5" fill="#fff"/>
+          <circle cx="135" cy="250" r="5" fill="#fff"/>
+          <circle cx="155" cy="250" r="5" fill="#fff"/>
+          <circle cx="175" cy="250" r="5" fill="#fff"/>
+          <circle cx="195" cy="250" r="5" fill="#fff"/>
+
+          <!-- candles -->
+          <g id="candles">
+            <rect x="127" y="160" width="5" height="26" rx="2" fill="#ffd166"/>
+            <rect x="139" y="160" width="5" height="26" rx="2" fill="#ffffff"/>
+            <rect x="151" y="160" width="5" height="26" rx="2" fill="#ffd166"/>
+            <rect x="163" y="160" width="5" height="26" rx="2" fill="#ffffff"/>
+            <rect x="175" y="160" width="5" height="26" rx="2" fill="#ffd166"/>
+          </g>
+
+          <!-- flames : id="flame0".."flame4" -->
+          <path id="flame0" class="flame" d="M129.5 160 C126 152 130 144 129.5 140 C134 146 135 154 132.5 160 Z" fill="#ffb703"/>
+          <path id="flame1" class="flame" d="M141.5 160 C138 152 142 144 141.5 140 C146 146 147 154 144.5 160 Z" fill="#ffb703"/>
+          <path id="flame2" class="flame" d="M153.5 160 C150 152 154 144 153.5 140 C158 146 159 154 156.5 160 Z" fill="#ffb703"/>
+          <path id="flame3" class="flame" d="M165.5 160 C162 152 166 144 165.5 140 C170 146 171 154 168.5 160 Z" fill="#ffb703"/>
+          <path id="flame4" class="flame" d="M177.5 160 C174 152 178 144 177.5 140 C182 146 183 154 180.5 160 Z" fill="#ffb703"/>
+        </g>
+
+        <!-- front arm (right, in front of cake) -->
+        <path d="M204 208 Q242 226 224 266 Q208 280 188 258 Z" fill="#f2b28c"/>
+
+        <!-- head -->
+        <circle cx="150" cy="138" r="58" fill="#f2b28c"/>
+        <!-- ears -->
+        <circle cx="94" cy="140" r="8" fill="#f2b28c"/>
+        <circle cx="206" cy="140" r="8" fill="#f2b28c"/>
+        <!-- hair -->
+        <path d="M90 128 Q86 66 150 64 Q214 66 210 128 Q204 92 150 90 Q96 92 90 128 Z" fill="#3a2317"/>
+        <!-- party hat -->
+        <path d="M150 30 L118 92 Q150 78 182 92 Z" fill="#ffd166" stroke="#fff" stroke-width="2"/>
+        <circle cx="150" cy="28" r="7" fill="#fff"/>
+        <path d="M128 66 L172 66" stroke="#fff" stroke-width="4"/>
+        <!-- face -->
+        <circle cx="128" cy="140" r="6.5" fill="#22163f"/>
+        <circle cx="172" cy="140" r="6.5" fill="#22163f"/>
+        <circle cx="130" cy="137" r="2" fill="#fff"/>
+        <circle cx="174" cy="137" r="2" fill="#fff"/>
+        <ellipse cx="108" cy="156" rx="9" ry="5.5" fill="#ff9a8b" opacity=".6"/>
+        <ellipse cx="192" cy="156" rx="9" ry="5.5" fill="#ff9a8b" opacity=".6"/>
+        <path d="M122 164 Q150 186 178 164" stroke="#22163f" stroke-width="5" fill="none" stroke-linecap="round"/>
+
+      </svg>
+    </div>
+
+    <div class="banner-wrap" id="bannerWrap">
+      <div class="banner"><span id="bannerMsg">Happy Birthday</span>, <span id="bannerName">Friend</span>!</div>
+    </div>
+
+    <div class="confetti-layer" id="confettiLayer"></div>
+
+    <div class="ui">
+      <button id="blowBtn">Blow out the candles 💨</button>
+      <p class="hint" id="hintText">Tap the button to blow out the candles</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   ✏️  EDIT HERE — change the name and greeting shown on the banner
+   ============================================================ */
+const CONFIG = {
+  friendName: "Friend",         // <-- put your friend's name here, e.g. "Ananya"
+  message: "Happy Birthday"     // <-- change the greeting text if you like
+};
+/* ============================================================ */
+
+document.getElementById('bannerName').textContent = CONFIG.friendName;
+document.getElementById('bannerMsg').textContent = CONFIG.message;
+document.title = CONFIG.message + ", " + CONFIG.friendName + "!";
+
+// ---- generate a few stars ----
+const starsLayer = document.getElementById('stars');
+for (let i = 0; i < 40; i++) {
+  const s = document.createElement('span');
+  s.style.left = Math.random() * 100 + '%';
+  s.style.top = Math.random() * 55 + '%';
+  s.style.animationDelay = (Math.random() * 2.6).toFixed(2) + 's';
+  starsLayer.appendChild(s);
+}
+
+const blowBtn = document.getElementById('blowBtn');
+const hintText = document.getElementById('hintText');
+const windLayer = document.getElementById('windLayer');
+const characterWrap = document.getElementById('characterWrap');
+const dust = document.getElementById('dust');
+const bannerWrap = document.getElementById('bannerWrap');
+const confettiLayer = document.getElementById('confettiLayer');
+const flameIds = ['flame0', 'flame1', 'flame2', 'flame3', 'flame4'];
+
+function launchConfetti() {
+  const colors = ['#ffd166', '#f78fb3', '#6fcf97', '#ff6f61', '#fff3e0'];
+  for (let i = 0; i < 40; i++) {
+    const bit = document.createElement('span');
+    bit.className = 'confetti-bit';
+    bit.style.left = Math.random() * 100 + '%';
+    bit.style.background = colors[Math.floor(Math.random() * colors.length)];
+    bit.style.animationDuration = (2 + Math.random() * 1.5).toFixed(2) + 's';
+    bit.style.animationDelay = (Math.random() * .4).toFixed(2) + 's';
+    confettiLayer.appendChild(bit);
+    setTimeout(() => bit.remove(), 4500);
+  }
+}
+
+function resetScene() {
+  flameIds.forEach(id => document.getElementById(id).classList.remove('out'));
+  windLayer.classList.remove('active', 'strong');
+  characterWrap.classList.remove('journey');
+  dust.classList.remove('journey');
+  bannerWrap.classList.remove('show');
+  bannerWrap.style.opacity = 0;
+  blowBtn.disabled = false;
+  blowBtn.textContent = 'Blow out the candles 💨';
+  hintText.textContent = 'Tap the button to blow out the candles';
+}
+
+function startSequence() {
+  blowBtn.disabled = true;
+  blowBtn.textContent = 'Blowing... 💨';
+  hintText.textContent = '';
+  windLayer.classList.add('active');
+
+  // blow out candles one by one
+  flameIds.forEach((id, i) => {
+    setTimeout(() => {
+      document.getElementById(id).classList.add('out');
+    }, 500 + i * 420);
+  });
+
+  const lastCandleTime = 500 + (flameIds.length - 1) * 420;
+
+  // wind grows stronger, character gets swept away, then lands heroically
+  setTimeout(() => {
+    windLayer.classList.add('strong');
+    characterWrap.classList.add('journey');
+    dust.classList.add('journey');
+  }, lastCandleTime + 700);
+
+  // calm the wind down partway through the flight
+  setTimeout(() => {
+    windLayer.classList.remove('active', 'strong');
+  }, lastCandleTime + 700 + 2600);
+
+  // reveal banner + confetti once the journey animation finishes
+  characterWrap.addEventListener('animationend', function onEnd(e) {
+    if (e.animationName !== 'heroicJourney') return;
+    characterWrap.removeEventListener('animationend', onEnd);
+    bannerWrap.classList.add('show');
+    launchConfetti();
+    blowBtn.disabled = false;
+    blowBtn.textContent = 'Play again 🔁';
+    hintText.textContent = '';
+  });
+}
+
+blowBtn.addEventListener('click', () => {
+  if (blowBtn.textContent.indexOf('again') !== -1) {
+    resetScene();
+    setTimeout(startSequence, 50);
+  } else {
+    startSequence();
+  }
+});
+</script>
+</body>
+</html>
